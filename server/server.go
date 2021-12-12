@@ -84,13 +84,5 @@ func Run(stopCh <-chan struct{}, bind string, timeoutSecond int64, config *ssh.S
 		return err
 	}
 	lis.Close()
-	if err = tcpConn.(*net.TCPConn).SetKeepAlive(true); err != nil {
-		log.WithError(err).Error("SetKeepAlive")
-		return err
-	}
-	if err = tcpConn.(*net.TCPConn).SetKeepAlivePeriod(time.Minute); err != nil {
-		log.WithError(err).Error("SetKeepAlivePeriod")
-		return err
-	}
 	return handleTCP(tcpConn, config, stopCh)
 }
