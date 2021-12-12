@@ -5,7 +5,6 @@ import (
 	"crypto/rsa"
 	"errors"
 	"flag"
-	"github.com/weixiao-huang/golang-setgroups-hang/utils"
 	"net"
 	"os"
 	"strings"
@@ -14,6 +13,8 @@ import (
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/ssh"
 	"k8s.io/apiserver/pkg/server"
+
+	"github.com/weixiao-huang/golang-setgroups-hang/utils"
 )
 
 func main() {

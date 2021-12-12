@@ -5,11 +5,12 @@ import (
 	"crypto/rsa"
 	"errors"
 	"flag"
-	"github.com/weixiao-huang/golang-setgroups-hang/utils"
 	"os"
 
 	log "github.com/sirupsen/logrus"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
+
+	"github.com/weixiao-huang/golang-setgroups-hang/utils"
 )
 
 func main() {
