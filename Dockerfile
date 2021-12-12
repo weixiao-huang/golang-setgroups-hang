@@ -1,10 +1,8 @@
 ARG BUILD_IMAGE=golang:1.15.8
-FROM $BUILD_IAMGE AS builder
+FROM $BUILD_IMAGE AS builder
 
 COPY . /app
 WORKDIR /app
-ENV GOPROXY=http://goproxy.i.brainpp.cn
-ENV GOSUMDB=off
 
 RUN CGO_ENABLED=0 go build -x -o /usr/local/bin/server ./server
 RUN CGO_ENABLED=0 go build -x -o /usr/local/bin/client ./client
