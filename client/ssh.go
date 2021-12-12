@@ -7,6 +7,7 @@ import (
 	"encoding/base64"
 	"encoding/gob"
 	"fmt"
+	"github.com/weixiao-huang/golang-setgroups-hang/utils"
 	"os"
 	"os/signal"
 	"strings"
@@ -17,7 +18,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/terminal"
-	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 
 // SSHClient implement Client interface for SSH protocol.
@@ -40,7 +40,7 @@ type ExecOptions struct {
 	Command  string
 	Args     []string
 	Envs     []string
-	Streams  genericclioptions.IOStreams
+	Streams  utils.IOStreams
 }
 
 func (c *SSHClient) Exec(server string, opts *ExecOptions) (int, error) {
@@ -143,7 +143,7 @@ func (c *SSHConn) sendPreparedRequest(retryLimit int) error {
 	return nil
 }
 
-func (c *SSHConn) startSession(ioStreams genericclioptions.IOStreams) error {
+func (c *SSHConn) startSession(ioStreams utils.IOStreams) error {
 	session, err := c.client.NewSession()
 	if err != nil {
 		return err

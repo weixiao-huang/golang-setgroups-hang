@@ -8,7 +8,6 @@ import (
 	"os"
 
 	log "github.com/sirupsen/logrus"
-	"k8s.io/cli-runtime/pkg/genericclioptions"
 
 	"github.com/weixiao-huang/golang-setgroups-hang/utils"
 )
@@ -40,7 +39,7 @@ func main() {
 	client := NewSSHClient(ctx, privateKey)
 	exitCode, err := client.Exec(*flagServer, &ExecOptions{
 		Command: "/bin/bash",
-		Streams: genericclioptions.IOStreams{In: os.Stdin, Out: os.Stdout, ErrOut: os.Stderr},
+		Streams: utils.IOStreams{In: os.Stdin, Out: os.Stdout, ErrOut: os.Stderr},
 	})
 	log.Infof("exitCode: %+v, err: %+v", exitCode, err)
 }

@@ -6,6 +6,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -53,4 +54,13 @@ func GetPrivateKey(keyPath string) (*rsa.PrivateKey, error) {
 		return nil, err
 	}
 	return key, nil
+}
+
+type IOStreams struct {
+	// In think, os.Stdin
+	In io.Reader
+	// Out think, os.Stdout
+	Out io.Writer
+	// ErrOut think, os.Stderr
+	ErrOut io.Writer
 }
