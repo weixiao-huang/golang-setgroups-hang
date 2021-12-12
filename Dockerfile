@@ -1,8 +1,13 @@
-ARG BUILD_IMAGE=golang:1.15.8
+ARG BUILD_IMAGE=golang:1.15.15
 FROM $BUILD_IMAGE AS builder
+
+ARG GOPROXY
 
 COPY . /app
 WORKDIR /app
+
+ENV GOPROXY=$GOPROXY
+ENV GOSUMDB=off
 
 RUN CGO_ENABLED=0 go build -x -o /usr/local/bin/server ./server
 RUN CGO_ENABLED=0 go build -x -o /usr/local/bin/client ./client
