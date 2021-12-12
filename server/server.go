@@ -12,7 +12,6 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/ssh"
-	"k8s.io/apiserver/pkg/server"
 
 	"github.com/weixiao-huang/golang-setgroups-hang/utils"
 )
@@ -59,7 +58,7 @@ func main() {
 		},
 	}
 	config.AddHostKey(signer)
-	if err := Run(server.SetupSignalHandler(), *flagBind, *flagTimeoutSecond, config); err != nil {
+	if err := Run(SetupSignalHandler(), *flagBind, *flagTimeoutSecond, config); err != nil {
 		panic(err)
 	}
 }

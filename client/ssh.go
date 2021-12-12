@@ -16,7 +16,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/ssh"
-	terminal "golang.org/x/term"
+	"golang.org/x/crypto/ssh/terminal"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 

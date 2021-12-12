@@ -63,16 +63,22 @@ func setWinsize(fd uintptr, w, h uint32) error {
 }
 
 func CopyWithContext(ctx context.Context, a, b io.ReadWriteCloser) {
+	log.Infof("~~~~~~~~~~ 1 ~~~~~~~~~")
 	ctx, cancel := context.WithCancel(ctx)
 	go func() {
+		log.Infof("[copy sshChan to pty] ~~~~~~~~~~ 1.1.1 ~~~~~~~~~")
 		io.Copy(a, b)
 		cancel()
+		log.Infof("[copy sshChan to pty] ~~~~~~~~~~ 1.1.2 ~~~~~~~~~")
 	}()
 	go func() {
+		log.Infof("[copy pty to sshChan] ~~~~~~~~~~ 1.2.1 ~~~~~~~~~")
 		io.Copy(b, a)
 		cancel()
+		log.Infof("[copy pty to sshChan] ~~~~~~~~~~ 1.2.1 ~~~~~~~~~")
 	}()
 	<-ctx.Done()
 	a.Close()
 	b.Close()
+	log.Infof("~~~~~~~~~~~~ 2 ~~~~~~~~~~~~~")
 }

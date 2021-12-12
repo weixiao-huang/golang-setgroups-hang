@@ -6,7 +6,6 @@ import (
 	"net"
 	"os"
 	"os/exec"
-	"sync"
 
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/ssh"
@@ -36,14 +35,12 @@ func handleTCP(conn net.Conn, config *ssh.ServerConfig, stopCh <-chan struct{}) 
 	log.WithField("remote", sshConn.RemoteAddr()).Info("Connection established")
 
 	ch := make(chan int, 1)
-	var wg sync.WaitGroup
 	go func() {
 		for req := range reqs {
 			go prepared(req, ch)
 		}
 	}()
 	<-ch // must wait before wg
-	wg.Wait()
 
 	for newChan := range chans {
 		switch t := newChan.ChannelType(); t {
@@ -93,17 +90,15 @@ func handleSession(ctx context.Context, newChan ssh.NewChannel, sshConn *ssh.Ser
 	}
 }
 
-const (
-	ShimName = "launcher-shim"
-)
-
 func (s *session) serveRequests(ctx context.Context, reqs <-chan *ssh.Request) {
 	for req := range reqs {
 		ok := false
 		switch req.Type {
 		case "exec":
+			log.Infof("--------- exec ---------")
 			ok = s.handleExec(ctx, req)
 		case "pty-req":
+			log.Infof("--------- pty-req ---------")
 			ok = s.handlePtyReq(ctx, req)
 		default:
 			log.WithField("requestType", req.Type).Warn("Unsupported session request")
